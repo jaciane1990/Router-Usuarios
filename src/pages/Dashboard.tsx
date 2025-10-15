@@ -1,14 +1,18 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 
 export default function Dashboard() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    navigate('/'); // ou use '/login' se quiser forçar novo login
+  };
+
   return (
-<div>
-  <nav>
-    <li><link to="/dashboard/perfil">Perfil</link></li>
-    <li><link to= "/dashboard/configuracoes">Configuracoes</link></li>
-    </nav>  
-  <h1>Dashboard</h1>
-  <Outlet /> {/* Renderiza os componentes filhos aqui */}
-</div>
-  )
-}   
+    <div className="dashboard-container">
+      <h1>Dashboard</h1>
+      <button className="voltar-btn" onClick={handleLogout}>Voltar</button>
+      <Outlet />
+    </div>
+  );
+}
